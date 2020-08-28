@@ -20,8 +20,10 @@ import org.springframework.util.StringUtils;
 import com.blue.dto.LancamentoEstatisticaCategoria;
 import com.blue.dto.LancamentoEstatisticaDia;
 import com.blue.dto.LancamentoEstatisticaPessoa;
+import com.blue.model.Categoria_;
 import com.blue.model.Lancamento;
 import com.blue.model.Lancamento_;
+import com.blue.model.Pessoa_;
 import com.blue.repository.filter.LancamentoFilter;
 import com.blue.repository.projection.ResumoLancamento;
 
@@ -111,7 +113,23 @@ public class LancamentoRepositoryImpl implements LancamentoRepositoryQuery {
 
 	@Override
 	public Page<ResumoLancamento> resumir(LancamentoFilter filter, Pageable pageable) {
-		return null;
+		
+		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<ResumoLancamento> criteriaQuery = criteriaBuilder.createQuery(ResumoLancamento.class);
+		Root<Lancamento> root = criteriaQuery.from(Lancamento.class);
+		
+		criteriaQuery.select(criteriaBuilder.construct(ResumoLancamento.class, 
+				root.get(Lancamento_.codigo), root.get(Lancamento_.descricao), root.get(Lancamento_.dataVencimento),
+				root.get(Lancamento_.dataPagamento), root.get(Lancamento_.valor), root.get(Lancamento_.tipo),
+				root.get(Lancamento_.categoria).get(Categoria_.nome), root.get(Lancamento_.pessoa).get(Pessoa_.nome)));
+		
+		Predicate[] predicates = criarRestricoes(filter, criteriaBuilder, root);
+		criteriaQuery.where(predicates);
+		
+		TypedQuery<ResumoLancamento> typedQuery = entityManager.createQuery(criteriaQuery);
+		adicionalRestricoesDePaginacao(typedQuery, pageable);
+		
+		return new PageImpl<>(typedQuery.getResultList(), pageable, total(filter));
 	}
 	
 	private Long total(LancamentoFilter lancamentoFilter) {
