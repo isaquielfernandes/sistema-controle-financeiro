@@ -59,7 +59,7 @@ public class Mailer {
 		
 		List<String> emails = destinatarios.stream().map(u -> u.getEmail()).collect(Collectors.toList());
 		
-		this.enviarEmail("adaumircosta@outlook.com", emails, 
+		this.enviarEmail("iisaquielfernandes@outlook.com", emails, 
 						"Lançamentos vencidos", 
 						"mail/aviso-lancamentos-vencidos", variaveis);
 	}
