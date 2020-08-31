@@ -1,0 +1,33 @@
+{"properties": [
+  {
+    "name": "financeiro.mail.host",
+    "type": "java.lang.String",
+    "description": "A description for 'financeiro.mail.host'"
+  },
+  {
+    "name": "financeiro.mail.port",
+    "type": "java.lang.String",
+    "description": "A description for 'financeiro.mail.port'"
+  },
+  {
+    "name": "financeiro.mail.username",
+    "type": "java.lang.String",
+    "description": "A description for 'financeiro.mail.username'"
+  },
+  {
+    "name": "financeiro.mail.password",
+    "type": "java.lang.String",
+    "description": "A description for 'financeiro.mail.password'"
+  },
+  {
+    "name": "financeiro.s3.access-key-id",
+    "type": "java.lang.String",
+    "description": "A description for 'financeiro.s3.access-key-id'"
+  },
+  {
+    "name": "financeiro.s3.secret-access-key",
+    "type": "java.lang.String",
+    "description": "A description for 'financeiro.s3.secret-access-key'"
+  }
+]
+}
